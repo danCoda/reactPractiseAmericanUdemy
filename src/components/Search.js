@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Search = () => {
     const [term, setTerm] = useState('');
     console.log("term: ", term);
+
+    useEffect(() => {
+        console.log('useEffect yo');
+    });
+    
     return (
         <div>
             <div className="ui form">
