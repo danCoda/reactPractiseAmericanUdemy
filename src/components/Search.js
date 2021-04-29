@@ -21,7 +21,18 @@ const Search = () => {
         if (term) searchWiki();
     }, [term]);
 
-    console.log(results);
+    const renderedResults = results.map(r => {
+        return (
+            <div className="item" key={r.pageid}>
+                <div className="content">
+                    <div className="header">
+                        {r.title}
+                    </div>
+                    <span dangerouslySetInnerHTML={{__html: r.snippet}}></span>
+                </div>
+            </div>
+        )
+    });
 
     return (
         <div>
@@ -35,6 +46,7 @@ const Search = () => {
                     />
                 </div>
             </div>
+            <div className="ui celled list">{renderedResults}</div>
         </div>
     );
 };
