@@ -18,12 +18,29 @@ const Search = () => {
             });
             setResults(data.query.search);
         }
-        if (term) searchWiki();
+
+        const timeoutId = setTimeout(() => {
+            if (term) searchWiki();
+        }, 500);
+
+        // Cleanup function... Stops our timeout, so that it can be restarted.
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+
     }, [term]);
 
     const renderedResults = results.map(r => {
         return (
             <div className="item" key={r.pageid}>
+                <div className="right floated content">
+                    <a
+                        className="ui button"
+                        href={`http://en.wikipedia.org?curid=${r.pageid}`}
+                    >
+                        Go
+                    </a>
+                </div>
                 <div className="content">
                     <div className="header">
                         {r.title}
