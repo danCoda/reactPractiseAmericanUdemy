@@ -19,15 +19,20 @@ const Search = () => {
             setResults(data.query.search);
         }
 
-        const timeoutId = setTimeout(() => {
-            if (term) searchWiki();
-        }, 500);
-
-        // Cleanup function... Stops our timeout, so that it can be restarted.
-        return () => {
-            if (timeoutId) clearTimeout(timeoutId);
-        };
-
+        if (term && !results.length) {
+            // Search immediately without delay on first load.
+            searchWiki();
+        } else {
+            const timeoutId = setTimeout(() => {
+                if (term) searchWiki();
+            }, 500);
+    
+            // Cleanup function... Stops our timeout, so that it can be restarted.
+            return () => {
+                if (timeoutId) clearTimeout(timeoutId);
+            };    
+        }
+        
     }, [term]);
 
     const renderedResults = results.map(r => {
