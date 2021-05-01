@@ -33,7 +33,6 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
 
     const onOptionClick = option => {
         onSelectedChange(option);
-        document.querySelector("#coloured-text").style.color = option.value;
     }
 
     const renderedOptions = options.map(o => {
@@ -66,9 +65,6 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="coloured-text" style={{color: selected.value}}>
-                I am a coloured text.
             </div>
         </div>
     );
