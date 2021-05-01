@@ -1,9 +1,13 @@
 // FYI, we aren't using JSX here, so no need to import react.
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Route = ({ path, children }) => {
+    // currentPath is used just for our route to update.
+    const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
     const onLocationChange = () => {
-        console.log("Change");
+        // If a state changes, then the component refreshes... thus we can get a different view. 
+        setCurrentPath(window.location.pathname);    
     };
 
     useEffect(() => {
@@ -16,7 +20,7 @@ const Route = ({ path, children }) => {
     }, []);
 
     // If the current URL pathname matches the path, show (or 'return') the children.
-    return window.location.pathname === path 
+    return currentPath === path 
         ? children
         : null;
 };
