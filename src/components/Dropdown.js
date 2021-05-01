@@ -31,34 +31,44 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
 
     }, []); // Only set the click handler once at first render.
 
+    const onOptionClick = option => {
+        onSelectedChange(option);
+        document.querySelector("#coloured-text").style.color = option.value;
+    }
+
     const renderedOptions = options.map(o => {
         if (o.value === selected.value) return null;
         return (
-            <div key={o.value} className="item" onClick={() => onSelectedChange(o)}>
+            <div key={o.value} className="item" onClick={() => onOptionClick(o)}>
                 {o.label}
             </div>
         );
     });
 
     return (
-        <div className="ui form" ref={ref} >
-            <div className="field">
-                <div className="label">
-                    Select a colour
-                </div>
-                <div 
-                    className={`ui selection dropdown ${open ? 'visible active' : ''}`}
-                    onClick={() => setOpen(!open)}
-                    >
+        <div>
+            <div className="ui form" ref={ref} >
+                <div className="field">
+                    <div className="label">
+                        Select a colour
+                    </div>
+                    <div 
+                        className={`ui selection dropdown ${open ? 'visible active' : ''}`}
+                        onClick={() => setOpen(!open)}
+                        >
 
-                    <i className="dropdown icon"></i>
-                    <div className="text">
-                        {selected.label}
-                    </div>
-                    <div className={`menu ${ open ? 'visible transition' : ''} `}>
-                        {renderedOptions}
+                        <i className="dropdown icon"></i>
+                        <div className="text">
+                            {selected.label}
+                        </div>
+                        <div className={`menu ${ open ? 'visible transition' : ''} `}>
+                            {renderedOptions}
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div id="coloured-text" style={{color: selected.value}}>
+                I am a coloured text.
             </div>
         </div>
     );
