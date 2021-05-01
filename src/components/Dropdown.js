@@ -14,10 +14,21 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         //  If check fails (click was done outside the dropdown), the manual handler can close the dropdown.
 
         // If user clicks outside the dropdown, hide it.
-        document.body.addEventListener('click', (event) => {
+        const onBodyClick = (event) => {
             if (ref.current.contains(event.target)) return;
             setOpen(false);
+        };
+        document.body.addEventListener('click', onBodyClick, {
+            capture: true
         });
+
+        // Our useEffect's cleanup code... so that if this Dropdown component gets removed, the click handler stops (because our ref will also be removed... thus will lead to errors in ref.current.contains, because ref.current becomes null when the DOM's removed.).
+        return () => {
+            document.body.removeEventListener('click', onBodyClick, {
+                capture: true
+            });
+        }
+
     }, []); // Only set the click handler once at first render.
 
     const renderedOptions = options.map(o => {
