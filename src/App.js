@@ -1,6 +1,7 @@
-import react from 'react';
+import react, { useState } from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
+import Dropdown from './components/Dropdown';
 
 const items = [
     {
@@ -16,11 +17,34 @@ const items = [
         content: 'Class components need a render function, which returns JSX. Functional components just need to return JSX. Class components must also extend "React.Components".'
     }
 ]
+
+const options = [
+    {
+        label: "The colour red",
+        value: "red"
+    },
+    {
+        label: "The colour green",
+        value: "green"
+    },
+    {
+        label: "The colour blue",
+        value: "blue"
+    }
+];
+
 export default () => {
+    const [selected, setSelected] = useState(options[0]);
+
     return (
         <div>
             {/* <Accordion items={items} /> */}
-            <Search />
+            {/* Search /> */}
+            <Dropdown 
+                options={options} 
+                selected={selected} 
+                onSelectedChange={setSelected} 
+            />
         </div>
     );
 }
